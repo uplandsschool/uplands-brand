@@ -1,0 +1,247 @@
+/*!
+ * Uplands brand kit · brand.css · v1.0.0
+ * The International School of Penang (Uplands)
+ * Shared colours, type and components for Uplands web apps.
+ * Usage: <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css">
+ */
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,500&display=swap");
+
+/* ───────────────────────── Tokens ───────────────────────── */
+:root {
+  /* Brand greens */
+  --ul-green: #2E7D4F;            /* primary: buttons, links, active states */
+  --ul-green-dark: #1F5A38;       /* hover, pressed */
+  --ul-green-bright: #3E9B6B;     /* gradient end, success dot */
+  --ul-crest-green: #2E5A46;      /* the crest's own green, for the wordmark */
+  --ul-gradient: linear-gradient(90deg, var(--ul-green) 0%, var(--ul-green-bright) 100%);
+
+  /* Tints and surfaces */
+  --ul-mist: #E6F2EB;             /* selected row, badges */
+  --ul-tint: #EEF3F0;             /* table header, segmented track */
+  --ul-page: #F5F7F6;             /* page background */
+  --ul-surface: #FFFFFF;          /* cards, sidebar, top bar */
+
+  /* Text */
+  --ul-ink: #2B3430;              /* headings and body */
+  --ul-text: #4E5954;             /* secondary text, nav items */
+  --ul-muted: #6B7570;            /* labels, captions (meets 4.5:1 on white) */
+
+  /* Lines */
+  --ul-border: #E3E8E5;           /* card and input borders */
+  --ul-divider: #EEF1EF;          /* hairlines inside cards */
+
+  /* Status */
+  --ul-warning: #E8A33A;
+  --ul-danger: #C0392B;
+
+  /* Load scale (summatives per week): soft greens for normal, amber and red for heavy.
+     Heavy levels differ from the greens in lightness as well as hue, for colour-blind users. */
+  --ul-load-0: #E3E8E5;
+  --ul-load-1: #CFE3D7;
+  --ul-load-2: #8FBFA3;
+  --ul-load-heavy: #E8A33A;
+  --ul-load-very-heavy: #C0392B;
+
+  /* Type */
+  --ul-font-sans: "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --ul-font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+  /* Shape and depth */
+  --ul-radius-sm: 8px;
+  --ul-radius: 12px;
+  --ul-radius-lg: 18px;
+  --ul-radius-pill: 999px;
+  --ul-shadow-card: 0 2px 12px rgba(30, 60, 45, 0.05);
+  --ul-shadow-accent: 0 4px 10px rgba(46, 90, 70, 0.25);
+
+  /* Spacing */
+  --ul-space-1: 4px;
+  --ul-space-2: 8px;
+  --ul-space-3: 12px;
+  --ul-space-4: 16px;
+  --ul-space-5: 24px;
+  --ul-space-6: 32px;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+.ul-app {
+  margin: 0;
+  background: var(--ul-page);
+  color: var(--ul-ink);
+  font-family: var(--ul-font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.ul-app a { color: var(--ul-green); }
+.ul-app a:hover { color: var(--ul-green-dark); }
+.ul-app :focus-visible { outline: 2px solid var(--ul-green); outline-offset: 2px; }
+
+/* ───────────────────────── Brand block ───────────────────────── */
+.ul-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--ul-space-3);
+  padding: 0 var(--ul-space-5) 22px;
+  border-bottom: 1px solid var(--ul-divider);   /* hairline under the subtitle */
+}
+.ul-brand__crest { width: 36px; height: auto; display: block; flex: none; }
+.ul-brand__text { display: flex; flex-direction: column; }
+.ul-brand__name {
+  font-family: var(--ul-font-serif);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.1;
+  color: var(--ul-green);
+}
+.ul-brand__subtitle { font-size: 12px; font-weight: 500; color: var(--ul-muted); }
+.ul-motto { font-family: var(--ul-font-serif); font-style: italic; font-weight: 500; color: var(--ul-muted); }
+
+/* ───────────────────────── Layout ───────────────────────── */
+.ul-shell { display: flex; min-height: 100vh; }
+.ul-sidebar {
+  width: 248px;
+  flex: none;
+  box-sizing: border-box;
+  padding: var(--ul-space-5) 0;
+  background: var(--ul-surface);
+  border-right: 1px solid var(--ul-border);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.ul-sidebar__footer {
+  margin-top: auto;
+  padding: var(--ul-space-4) var(--ul-space-5) 0;
+  border-top: 1px solid var(--ul-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ul-muted);
+}
+.ul-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.ul-topbar {
+  min-height: 64px;
+  box-sizing: border-box;
+  padding: 0 28px;
+  background: var(--ul-surface);
+  border-bottom: 1px solid var(--ul-border);
+  display: flex;
+  align-items: center;
+  gap: var(--ul-space-4);
+  flex-wrap: wrap;
+}
+.ul-content { padding: 28px; display: flex; flex-direction: column; gap: 22px; }
+
+/* ───────────────────────── Navigation ───────────────────────── */
+.ul-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--ul-space-4); }
+.ul-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 var(--ul-space-3);
+  border-radius: var(--ul-radius-sm);
+  color: var(--ul-text);
+  font-weight: 500;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.ul-nav__item:hover { background: var(--ul-tint); color: var(--ul-ink); }
+.ul-nav__item.is-active,
+.ul-nav__item[aria-current="page"] {
+  background: var(--ul-gradient);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: var(--ul-shadow-accent);
+}
+.ul-nav__item svg { width: 18px; height: 18px; flex: none; }
+
+/* ───────────────────────── Buttons ───────────────────────── */
+.ul-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ul-space-2);
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: var(--ul-radius-pill);
+  border: 1px solid var(--ul-border);
+  background: var(--ul-surface);
+  color: var(--ul-ink);
+  font: 600 13px var(--ul-font-sans);
+  text-decoration: none;
+  cursor: pointer;
+}
+.ul-btn:hover { border-color: var(--ul-green); color: var(--ul-green-dark); }
+.ul-btn--primary { border: 0; background: var(--ul-green); color: #FFFFFF; box-shadow: var(--ul-shadow-accent); }
+.ul-btn--primary:hover { background: var(--ul-green-dark); color: #FFFFFF; }
+.ul-btn--outline { border-color: var(--ul-green); color: var(--ul-green); }
+.ul-btn:disabled { opacity: 0.6; cursor: progress; }
+
+/* ───────────────────────── Inputs and controls ───────────────────────── */
+.ul-input,
+.ul-select {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 0 var(--ul-space-4);
+  border: 1px solid var(--ul-border);
+  border-radius: var(--ul-radius-pill);
+  background: var(--ul-surface);
+  color: var(--ul-ink);
+  font: 14px var(--ul-font-sans);
+}
+.ul-segmented { display: inline-flex; gap: var(--ul-space-1); padding: var(--ul-space-1); background: var(--ul-tint); border-radius: var(--ul-radius-pill); }
+.ul-segmented__item {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--ul-radius-pill);
+  background: transparent;
+  color: var(--ul-muted);
+  font: 600 13px var(--ul-font-sans);
+  cursor: pointer;
+}
+.ul-segmented__item.is-active,
+.ul-segmented__item[aria-pressed="true"] { background: var(--ul-surface); color: var(--ul-ink); box-shadow: 0 1px 2px rgba(22, 32, 27, 0.12); }
+
+/* ───────────────────────── Cards, stats, badges ───────────────────────── */
+.ul-card { background: var(--ul-surface); border: 1px solid var(--ul-border); border-radius: var(--ul-radius); box-shadow: var(--ul-shadow-card); }
+.ul-card__header { padding: var(--ul-space-3) 14px; border-bottom: 1px solid var(--ul-divider); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ul-stat { padding: var(--ul-space-4) 18px; display: flex; flex-direction: column; gap: 6px; }
+.ul-stat__label { font-size: 12px; font-weight: 500; color: var(--ul-muted); }
+.ul-stat__value { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+.ul-stat__note { font-size: 12px; color: var(--ul-muted); }
+.ul-badge { display: inline-block; padding: 2px 10px; border-radius: var(--ul-radius-pill); background: var(--ul-mist); color: var(--ul-green-dark); font-weight: 700; font-size: 12px; }
+.ul-status { display: inline-flex; align-items: center; gap: var(--ul-space-2); font-size: 13px; color: var(--ul-muted); }
+.ul-status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ul-green-bright); }
+
+/* ───────────────────────── Tables ───────────────────────── */
+.ul-table { width: 100%; border-collapse: collapse; }
+.ul-table th { text-align: left; padding: 10px 18px; font-size: 12px; font-weight: 500; color: var(--ul-muted); background: var(--ul-tint); border-bottom: 1px solid var(--ul-divider); }
+.ul-table td { padding: 14px 18px; border-bottom: 1px solid var(--ul-divider); vertical-align: middle; }
+.ul-table tr.is-selected td { background: var(--ul-mist); }
+.ul-table tr.is-selected td:first-child { box-shadow: inset 3px 0 0 var(--ul-green); }
+
+/* ───────────────────────── Load scale ───────────────────────── */
+.ul-load { display: inline-block; width: 10px; height: 18px; border-radius: 3px; background: var(--ul-load-0); position: relative; }
+.ul-load--1 { background: var(--ul-load-1); }
+.ul-load--2 { background: var(--ul-load-2); }
+.ul-load--heavy { background: var(--ul-load-heavy); }
+.ul-load--very-heavy { background: var(--ul-load-very-heavy); }
+/* Extra non-colour cue on heavy weeks */
+.ul-load--heavy::after,
+.ul-load--very-heavy::after { content: ""; position: absolute; left: 50%; top: 3px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: #FFFFFF; }
+
+/* ───────────────────────── Footer ───────────────────────── */
+.ul-footer { display: flex; justify-content: space-between; align-items: baseline; gap: var(--ul-space-4); flex-wrap: wrap; font-size: 12px; color: var(--ul-muted); }
+
+/* ───────────────────────── Motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ul-app * { transition: none !important; animation: none !important; }
+}
