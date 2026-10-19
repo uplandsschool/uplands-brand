@@ -13,8 +13,10 @@ Current version: **1.1.0** (see [Changes](#changes)).
 Add one line inside `<head>`:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css?v=1.1.0">
 ```
+
+Keep `@1` so small fixes arrive automatically. The `?v=` number makes browsers fetch a fresh copy instead of an old saved one. **When your app starts using classes or colours from a newer kit version, change the `?v=` number in your link to that version.**
 
 The repo lives in the [uplandsschool](https://github.com/uplandsschool) GitHub organisation.
 
@@ -30,7 +32,7 @@ The crest:
 
 | Link ends with | What you get | Use for |
 |---|---|---|
-| `@1/brand.css` | The latest **1.x** release, picked up automatically | Most sites |
+| `@1/brand.css?v=1.1.0` | The latest **1.x** release, picked up automatically | Most sites |
 | `@1.1.0/brand.css` | Exactly version 1.1.0, never changes | Sites that must never change by surprise |
 
 A **2.0.0** release is only used by sites that switch their link to `@2`, so breaking changes never reach a site unannounced.
@@ -149,9 +151,15 @@ If your app needs a colour or component the kit doesn't have, don't invent one i
 
 ## Releasing a new version
 
-1. Edit the files on GitHub and commit.
-2. Go to **Releases → Draft a new release**, create a tag such as `v1.1.0` (small changes) or `v2.0.0` (changes that could break existing pages), and publish it.
-3. Sites linking to `@1` pick up `v1.x` releases automatically. The CDN can take a while to refresh; to speed it up, open `https://purge.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css` in a browser.
+1. Edit the files on GitHub and commit. In `brand.css`, update the version number on line 2.
+2. Go to **Releases → Draft a new release**, create a tag such as `v1.2.0` (small changes) or `v2.0.0` (changes that could break existing pages), and publish it.
+3. **Purge the CDN. Don't skip this:** jsDelivr caches the `@1` range and keeps serving the old version after a new tag. Open this in a browser and check it says `"status": "finished"`:
+   `https://purge.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css`
+   Do the same for every other file that changed, for example `https://purge.jsdelivr.net/gh/uplandsschool/uplands-brand@1/logo/uplands-crest-128.png`.
+4. **Check it's live:** open `https://cdn.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css` and confirm line 2 shows the new version number. If not, wait a few minutes and purge again.
+5. **Update the `?v=` number** in the README, the Uplands Brand Kit Google Doc and the branding snippet, so new apps start on the new version. Existing apps change their own `?v=` number when they start using the new classes or colours.
+
+Why the `?v=` number matters: browsers keep their own copy of brand.css for up to 7 days, saved separately for each site, so a hard reload doesn't reliably fix it inside Apps Script. Without the new version's variables, new styles quietly fail (for example, tinted boxes show as white). Changing `?v=` makes browsers fetch a fresh copy.
 
 ## Rules for this repo
 
