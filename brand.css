@@ -1,8 +1,13 @@
 /*!
- * Uplands brand kit · brand.css · v1.0.0
+ * Uplands brand kit · brand.css · v1.1.0
  * The International School of Penang (Uplands)
  * Shared colours, type and components for Uplands web apps.
  * Usage: <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uplandsschool/uplands-brand@1/brand.css">
+ *
+ * v1.1.0: status tints and text colours, row hover, notices, form fields and
+ *         errors, text areas, empty states, status badges, danger button,
+ *         hover table rows. Additions only: no v1.0.0 rule changed
+ *         (disabled fields now also look greyed out).
  */
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,500&display=swap");
 
@@ -20,11 +25,13 @@
   --ul-tint: #EEF3F0;             /* table header, segmented track */
   --ul-page: #F5F7F6;             /* page background */
   --ul-surface: #FFFFFF;          /* cards, sidebar, top bar */
+  --ul-hover: #FAFCFB;            /* v1.1: row hover, alternate (zebra) rows */
 
   /* Text */
   --ul-ink: #2B3430;              /* headings and body */
   --ul-text: #4E5954;             /* secondary text, nav items */
   --ul-muted: #6B7570;            /* labels, captions (meets 4.5:1 on white) */
+  --ul-faint: #9AA3A0;            /* v1.1: past or disabled items only, never essential text (2.6:1) */
 
   /* Lines */
   --ul-border: #E3E8E5;           /* card and input borders */
@@ -33,6 +40,18 @@
   /* Status */
   --ul-warning: #E8A33A;
   --ul-danger: #C0392B;
+
+  /* v1.1: status tints. Background + border + text for each state.
+     Each text colour meets 4.5:1 on its own tint and on white. */
+  --ul-success-tint: #EEF9F2;
+  --ul-success-border: #BFE5CF;
+  --ul-success-text: #2F5D45;     /* 7.0:1 on its tint */
+  --ul-warning-tint: #FDF1DC;
+  --ul-warning-border: #F2D49B;
+  --ul-warning-text: #8A5300;     /* 5.7:1 on its tint */
+  --ul-danger-tint: #FBE3E3;
+  --ul-danger-border: #EDB4B4;
+  --ul-danger-text: #9E2A20;      /* 6.1:1 on its tint */
 
   /* Load scale (summatives per week): soft greens for normal, amber and red for heavy.
      Heavy levels differ from the greens in lightness as well as hue, for colour-blind users. */
@@ -182,6 +201,9 @@
 .ul-btn--primary { border: 0; background: var(--ul-green); color: #FFFFFF; box-shadow: var(--ul-shadow-accent); }
 .ul-btn--primary:hover { background: var(--ul-green-dark); color: #FFFFFF; }
 .ul-btn--outline { border-color: var(--ul-green); color: var(--ul-green); }
+/* v1.1: for Remove / Delete actions. Outline only, so it never competes with the primary button. */
+.ul-btn--danger { border-color: var(--ul-danger-border); color: var(--ul-danger-text); }
+.ul-btn--danger:hover { border-color: var(--ul-danger); background: var(--ul-danger-tint); color: var(--ul-danger-text); }
 .ul-btn:disabled { opacity: 0.6; cursor: progress; }
 
 /* ───────────────────────── Inputs and controls ───────────────────────── */
@@ -195,6 +217,30 @@
   background: var(--ul-surface);
   color: var(--ul-ink);
   font: 14px var(--ul-font-sans);
+}
+/* v1.1: multi-line text box. Rounded rectangle, not a pill. */
+.ul-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 96px;
+  padding: 10px var(--ul-space-4);
+  border: 1px solid var(--ul-border);
+  border-radius: var(--ul-radius);
+  background: var(--ul-surface);
+  color: var(--ul-ink);
+  font: 14px/1.45 var(--ul-font-sans);
+  resize: vertical;
+}
+/* v1.1: error and disabled states for every field */
+.ul-input.is-invalid, .ul-select.is-invalid, .ul-textarea.is-invalid,
+.ul-input[aria-invalid="true"], .ul-select[aria-invalid="true"], .ul-textarea[aria-invalid="true"] {
+  border-color: var(--ul-danger);
+  box-shadow: 0 0 0 1px var(--ul-danger);
+}
+.ul-input:disabled, .ul-select:disabled, .ul-textarea:disabled {
+  background: var(--ul-tint);
+  color: var(--ul-muted);
+  cursor: not-allowed;
 }
 .ul-segmented { display: inline-flex; gap: var(--ul-space-1); padding: var(--ul-space-1); background: var(--ul-tint); border-radius: var(--ul-radius-pill); }
 .ul-segmented__item {
@@ -210,6 +256,20 @@
 .ul-segmented__item.is-active,
 .ul-segmented__item[aria-pressed="true"] { background: var(--ul-surface); color: var(--ul-ink); box-shadow: 0 1px 2px rgba(22, 32, 27, 0.12); }
 
+/* ───────────────────────── Form fields (v1.1) ───────────────────────── */
+/* <div class="ul-field">
+ *   <label class="ul-label" for="email">Email</label>
+ *   <input class="ul-input" id="email" aria-describedby="email-hint">
+ *   <span class="ul-hint" id="email-hint">Your @uplands.org address</span>
+ *   <span class="ul-field-error">Enter a full email address.</span>
+ * </div> */
+.ul-field { display: flex; flex-direction: column; gap: 6px; }
+.ul-label { font-size: 13px; font-weight: 600; color: var(--ul-ink); }
+.ul-label .ul-optional { font-weight: 400; color: var(--ul-muted); }
+.ul-hint { font-size: 12px; color: var(--ul-muted); }
+.ul-field-error { font-size: 12px; font-weight: 600; color: var(--ul-danger-text); }
+.ul-field-error:empty { display: none; }
+
 /* ───────────────────────── Cards, stats, badges ───────────────────────── */
 .ul-card { background: var(--ul-surface); border: 1px solid var(--ul-border); border-radius: var(--ul-radius); box-shadow: var(--ul-shadow-card); }
 .ul-card__header { padding: var(--ul-space-3) 14px; border-bottom: 1px solid var(--ul-divider); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -218,8 +278,36 @@
 .ul-stat__value { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
 .ul-stat__note { font-size: 12px; color: var(--ul-muted); }
 .ul-badge { display: inline-block; padding: 2px 10px; border-radius: var(--ul-radius-pill); background: var(--ul-mist); color: var(--ul-green-dark); font-weight: 700; font-size: 12px; }
+/* v1.1: status badges. Say the state in words; the colour only backs it up. */
+.ul-badge--neutral { background: var(--ul-tint); color: var(--ul-text); }
+.ul-badge--warning { background: var(--ul-warning-tint); color: var(--ul-warning-text); }
+.ul-badge--danger { background: var(--ul-danger-tint); color: var(--ul-danger-text); }
 .ul-status { display: inline-flex; align-items: center; gap: var(--ul-space-2); font-size: 13px; color: var(--ul-muted); }
 .ul-status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ul-green-bright); }
+
+/* ───────────────────────── Notices (v1.1) ───────────────────────── */
+/* A message banner: "Saved", "Something went wrong", "You don't have access".
+ * <div class="ul-notice ul-notice--success" role="status"><strong>Saved.</strong> Changes apply on reload.</div>
+ * Use role="alert" for errors the person must act on. */
+.ul-notice {
+  padding: 10px 14px;
+  border: 1px solid var(--ul-border);
+  border-radius: var(--ul-radius-sm);
+  background: var(--ul-tint);
+  color: var(--ul-text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.ul-notice strong { color: inherit; font-weight: 700; }
+.ul-notice--success { background: var(--ul-success-tint); border-color: var(--ul-success-border); color: var(--ul-success-text); }
+.ul-notice--warning { background: var(--ul-warning-tint); border-color: var(--ul-warning-border); color: var(--ul-warning-text); }
+.ul-notice--error   { background: var(--ul-danger-tint);  border-color: var(--ul-danger-border);  color: var(--ul-danger-text); }
+.ul-notice:empty { display: none; }
+
+/* ───────────────────────── Empty and loading states (v1.1) ───────────────────────── */
+/* <div class="ul-empty"><strong>No students match "Smith".</strong>Check the spelling, or search by ID.</div> */
+.ul-empty { padding: 36px var(--ul-space-4); text-align: center; color: var(--ul-muted); font-size: 14px; }
+.ul-empty strong { display: block; margin-bottom: var(--ul-space-1); color: var(--ul-ink); font-weight: 600; }
 
 /* ───────────────────────── Tables ───────────────────────── */
 .ul-table { width: 100%; border-collapse: collapse; }
@@ -227,6 +315,11 @@
 .ul-table td { padding: 14px 18px; border-bottom: 1px solid var(--ul-divider); vertical-align: middle; }
 .ul-table tr.is-selected td { background: var(--ul-mist); }
 .ul-table tr.is-selected td:first-child { box-shadow: inset 3px 0 0 var(--ul-green); }
+/* v1.1: opt-in extras. Add to the table: <table class="ul-table ul-table--hover"> */
+.ul-table--hover tbody tr:hover td { background: var(--ul-hover); }
+.ul-table--striped tbody tr:nth-child(even) td { background: var(--ul-hover); }
+.ul-table--compact th { padding: 8px 12px; }
+.ul-table--compact td { padding: 10px 12px; }
 
 /* ───────────────────────── Load scale ───────────────────────── */
 .ul-load { display: inline-block; width: 10px; height: 18px; border-radius: 3px; background: var(--ul-load-0); position: relative; }
